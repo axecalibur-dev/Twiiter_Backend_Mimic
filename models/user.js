@@ -1,8 +1,8 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
   first_name: {
     type: String,
     required: [true, "Can't be blank"],
@@ -49,17 +49,13 @@ var userSchema = mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
   const user = this;
-  const hash = await bcrypt.hash(this.password, 10);
-
-  this.password = hash;
+  this.password = await bcrypt.hash(this.password, 10);
   next();
 });
 
 userSchema.methods.isValidPassword = async function (password) {
   const user = this;
-  const compare = await bcrypt.compare(password, user.password);
-
-  return compare;
+  return await bcrypt.compare(password, user.password);
 };
 
 // Creating users password reset token
@@ -75,5 +71,5 @@ userSchema.methods.createPasswordResetToken = function () {
   return resetToken;
 };
 
-var User = mongoose.model("users", userSchema);
+const User = mongoose.model("users", userSchema);
 module.exports = User;

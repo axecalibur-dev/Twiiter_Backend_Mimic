@@ -6,7 +6,7 @@ const app = require("./app");
 // MongoDB CONNECTION STRING
 const DATABASE_CONN_STRING = process.env.MONGO_URI || DB;
 if (!DATABASE_CONN_STRING) {
-  return console.log("Please insert MONGODB URI in enviroment");
+  return console.log("Please insert MONGODB URI in environment");
 }
 mongoose
   .connect(DATABASE_CONN_STRING, {
@@ -14,15 +14,15 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log("Database connected");
+    console.log("Database Connected");
   })
-  .catch((err) => {ßßß
+  .catch((err) => {
     console.log(err);
     console.log("\nDatabase connection failed\n");
   });
 //
-var PORT = process.env.PORT || 9098;
-// hellodfds
+const PORT = process.env.PORT || 9098;
+
 app.listen(PORT, () => {
-  console.log(`server starting on a certain port + ${PORT}`);
+  console.log(`Server starting on port : ${PORT}`);
 });
